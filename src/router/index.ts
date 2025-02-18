@@ -13,6 +13,16 @@ const router = createRouter({
       name: 'authenticate',
       component: () => import('../views/AuthenticateView.vue'),
     },
+    {
+      path: '/match/:id',
+      name: 'match',
+      component: () => import('../views/MatchView.vue'),
+    },
+    {
+      path: '/matchlist',
+      name: 'matchlist',
+      component: () => import('../views/MatchListView.vue'),
+    },
   ],
 })
 

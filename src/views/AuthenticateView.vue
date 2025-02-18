@@ -3,7 +3,7 @@ import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 import { useAuth } from '@/stores/authStore'
-import axios from 'axios'
+import axios, { AxiosError, isAxiosError } from 'axios'
 
 const router = useRouter()
 const authStore = useAuth()
@@ -59,13 +59,17 @@ onMounted(async () => {
 
     router.push('/')
   } catch (error) {
-    console.error(error)
-    toast.add({
-      severity: 'error',
-      summary: 'Ошибка',
-      detail: error?.response?.data?.error || 'Не удалось авторизоваться',
-      life: 3000,
-    })
+    if (isAxiosError(error)) {
+      console.error(error)
+      toast.add({
+        severity: 'error',
+        summary: 'Ошибка',
+        detail: error?.response?.data?.error || 'Не удалось авторизоваться',
+        life: 3000,
+      })
+    } else {
+      throw error
+    }
   }
 })
 </script>

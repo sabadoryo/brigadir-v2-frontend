@@ -3,20 +3,24 @@ import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 import { useAuth } from '@/stores/authStore'
-import axios, { AxiosError, isAxiosError } from 'axios'
+import axios, { isAxiosError } from 'axios'
 
 const router = useRouter()
 const authStore = useAuth()
 const toast = useToast()
 const code = new URLSearchParams(window.location.search).get('code')
 
-const getUserInfo = async (token: string) => {
+async function getMe(token: string) {
   try {
-    const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/matches`, {
-      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+    const { data } = await axios.get('https://discord.com/api/users/@me', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
+    console.log(data)
+    authStore.setUser(data)
   } catch (error) {
-    console.error(error)
+    console.error('Error fetching user data', error)
   }
 }
 
@@ -45,15 +49,12 @@ onMounted(async () => {
     const headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
     }
-    console.log(requestData)
     const { data } = await axios.post('https://discord.com/api/oauth2/token', requestData, {
       headers,
     })
-
+    await getMe(data.access_token)
     authStore.authenticate(data)
-    await getUserInfo(data.access_token)
-
-    router.push('/')
+    router.push('/home')
   } catch (error) {
     if (isAxiosError(error)) {
       console.error(error)
@@ -72,7 +73,7 @@ onMounted(async () => {
 
 <template>
   <div class="flex justify-content-center align-items-center h-screen">
-    <ProgressSpinner />
-    <Toast />
+    <PrimeProgressSpinner />
+    <PrimeToast />
   </div>
 </template>

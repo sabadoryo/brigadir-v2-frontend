@@ -1,71 +1,61 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
+import apiClient from '@/utils/axiosInstance'
 
 interface Match {
   _id: string
   game: string
-  teamA: { _id: string; name: string }
-  teamB: { _id: string; name: string }
+  hostId: string
+  playerAmount: number
+  teamA: string[]
+  teamB: string[]
   winner?: { _id: string; name: string }
   status: string
-  startTime: string
+  startTime?: string
   endTime?: string
 }
 
-const matches = ref<Match[]>([
-  {
-    _id: 'match1',
-    game: 'valorant',
-    teamA: { _id: 'teamA', name: 'teamA' },
-    teamB: { _id: 'teamB', name: 'teamB' },
-    winner: { _id: 'teamA', name: 'teamA' },
-    status: 'ended',
-    startTime: '19:20',
-    endTime: '20:01',
-  },
-  {
-    _id: 'match2',
-    game: 'valorant',
-    teamA: { _id: 'team1', name: 'team1' },
-    teamB: { _id: 'team2', name: 'team2' },
-    winner: { _id: 'team2', name: 'team2' },
-    status: 'ended',
-    startTime: '16:20',
-    endTime: '16:55',
-  },
-])
+const matches = ref<Match[]>([])
 const router = useRouter()
+const loading = ref(false)
 
-// const fetchMatches = async () => {
-//   try {
-//     const response = await axios.get<Match[]>('/api/matches')
-//     matches.value = response.data
-//   } catch (error) {
-//     console.error('Error fetching matches', error)
-//   }
-// }
+const fetchMatches = async () => {
+  try {
+    loading.value = true
+    const response = await apiClient.get<Match[]>('/matches')
+    matches.value = response.data
+  } catch (error) {
+    console.error('Error fetching matches', error)
+  } finally {
+    loading.value = false
+  }
+}
 
 const goToMatch = (id: string) => {
   router.push({ path: `/matchlist/${id}` })
 }
 
-// onMounted(fetchMatches)
+onMounted(async () => {
+  await fetchMatches()
+})
 </script>
 
 <template>
-  <DataTable :value="matches" responsiveLayout="scroll">
-    <Column field="game" header="Game"></Column>
-    <Column field="teamA.name" header="Team A"></Column>
-    <Column field="teamB.name" header="Team B"></Column>
-    <Column field="status" header="Status"></Column>
-    <Column field="startTime" header="Start Time"></Column>
-    <Column field="endTime" header="End Time"></Column>
-    <Column>
+  <PrimeDataTable :loading="loading" :value="matches" responsiveLayout="scroll">
+    <PrimeColumn field="game" header="Game"></PrimeColumn>
+    <PrimeColumn field="hostId" header="Host"></PrimeColumn>
+    <PrimeColumn field="teamA.name" header="Team A"></PrimeColumn>
+    <PrimeColumn field="teamB.name" header="Team B"></PrimeColumn>
+    <PrimeColumn field="status" header="Status"></PrimeColumn>
+    <PrimeColumn field="startTime" header="Start Time"></PrimeColumn>
+    <PrimeColumn field="endTime" header="End Time"></PrimeColumn>
+    <PrimeColumn>
       <template #body="{ data }">
-        <Button label="View" @click="goToMatch(data._id)" />
+        <div class="flex justify-content-end">
+          <PrimeButton label="Go to match" @click="goToMatch(data._id)" />
+        </div>
       </template>
-    </Column>
-  </DataTable>
+    </PrimeColumn>
+  </PrimeDataTable>
 </template>

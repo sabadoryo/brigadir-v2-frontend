@@ -9,7 +9,7 @@ import PrimeVue from 'primevue/config'
 import Button from 'primevue/button'
 import Aura from '@primevue/themes/aura'
 import ToastService from 'primevue/toastservice'
-import { ProgressSpinner, Toast } from 'primevue'
+import { Avatar, Menubar, ProgressSpinner, Skeleton, Toast } from 'primevue'
 import DataView from 'primevue/dataview';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -23,14 +23,18 @@ app.use(PrimeVue, {
     preset: Aura,
   },
 })
-app.component('Button', Button)
-app.component('ProgressSpinner', ProgressSpinner)
-app.component('Toast', Toast)
-app.component('DataView', DataView)
-app.component('DataTable', DataTable)
-app.component('Column', Column)
-app.component('ColumnGroup', ColumnGroup)
-app.component('Row', Row)
+app.component('PrimeButton', Button)
+app.component('PrimeProgressSpinner', ProgressSpinner)
+app.component('PrimeToast', Toast)
+app.component('PrimeDataView', DataView)
+app.component('PrimeDataTable', DataTable)
+app.component('PrimeColumn', Column)
+app.component('PrimeColumnGroup', ColumnGroup)
+app.component('PrimeRow', Row)
+app.component('PrimeMenubar', Menubar)
+app.component('PrimeAvatar', Avatar)
+app.component('PrimeSkeleton', Skeleton)
+
 app.use(ToastService)
 app.use(createPinia())
 app.use(router)

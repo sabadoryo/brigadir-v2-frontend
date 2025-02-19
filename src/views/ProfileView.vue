@@ -48,9 +48,3 @@ onMounted(async () => {
     </div>
   </div>
 </template>
-
-<style scoped>
-.text-secondary {
-  color: var(--text-secondary-color);
-}
-</style>

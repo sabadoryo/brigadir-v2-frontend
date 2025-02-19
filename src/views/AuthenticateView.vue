@@ -12,13 +12,10 @@ const code = new URLSearchParams(window.location.search).get('code')
 
 const getUserInfo = async (token: string) => {
   try {
-    const { data } = await axios.get('https://discordapp.com/api/users/@me', {
+    const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/matches`, {
       headers: { Authorization: `Bearer ${token}` },
-    })
-
-    localStorage.setItem('id', data.id)
-    localStorage.setItem('avatar', data.avatar)
-    localStorage.setItem('username', data.username)
+    }) 
+    
   } catch (error) {
     console.error(error)
   }

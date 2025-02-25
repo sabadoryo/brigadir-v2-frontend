@@ -2,9 +2,9 @@
 import { onMounted, ref } from 'vue'
 import apiClient from '@/utils/axiosInstance'
 import { useRoute } from 'vue-router'
-import LoadingWrapperComponent from '@/components/LoadingWrapperComponent.vue'
+import type { Player } from '@/types/player'
 
-const user = ref({})
+const user = ref<Player>()
 const route = useRoute()
 const loading = ref(false)
 
@@ -13,7 +13,9 @@ async function getUser() {
     loading.value = true
     const { data } = await apiClient.get(`/players/${route.params.username}`)
     user.value = data
-    user.value.avatar = `https://cdn.discordapp.com/avatars/${user.value?.discordId}/${user.value?.avatar}.png`
+    if (user.value) {
+      user.value.avatar = `https://cdn.discordapp.com/avatars/${user.value.discordId}/${user.value?.avatar}.png`
+    }
   } catch (error) {
     console.error('Error fetching user', error)
   } finally {

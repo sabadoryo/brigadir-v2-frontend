@@ -1,20 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import apiClient from '@/utils/axiosInstance'
-
-interface Match {
-  _id: string
-  game: string
-  hostId: string
-  playerAmount: number
-  teamA: string[]
-  teamB: string[]
-  winner?: { _id: string; name: string }
-  status: string
-  startTime?: string
-  endTime?: string
-}
+import { matchService } from '@/api/services/matchService'
+import type { Match } from '@/types/match'
 
 const matches = ref<Match[]>([])
 const router = useRouter()
@@ -23,7 +11,7 @@ const loading = ref(false)
 const fetchMatches = async () => {
   try {
     loading.value = true
-    const response = await apiClient.get<Match[]>('/matches')
+    const response = await matchService.getMatches()
     matches.value = response.data
   } catch (error) {
     console.error('Error fetching matches', error)

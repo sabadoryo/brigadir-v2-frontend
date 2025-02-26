@@ -7,4 +7,7 @@ export const API_ENDPOINTS = {
     start: (matchId: string) => `/matches/${matchId}/start`,
     end: (matchId: string) => `/matches/${matchId}/end`,
   },
-};
+  players: {
+    playerByUsername: (username: string) => `/players/${username}`,
+  },
+}

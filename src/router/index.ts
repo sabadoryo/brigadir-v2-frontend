@@ -33,9 +33,9 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
-      path: '/matchlist',
-      name: 'matchlist',
-      component: () => import('../views/MatchListView.vue'),
+      path: '/matches',
+      name: 'matches',
+      component: () => import('../views/MatchesView.vue'),
       meta: { requiresAuth: true },
     },
     {

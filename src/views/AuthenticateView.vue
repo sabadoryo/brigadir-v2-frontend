@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 import { useAuth } from '@/stores/authStore'
 import axios, { isAxiosError } from 'axios'
+import { playerService } from '@/api/services/playerService'
 
 const router = useRouter()
 const authStore = useAuth()
@@ -17,8 +18,8 @@ async function getMe(token: string) {
         Authorization: `Bearer ${token}`,
       },
     })
-    console.log(data)
-    authStore.setUser(data)
+    const { data: playerData } = await playerService.getPlayerByUsername(data.username)
+    authStore.setUser(playerData)
   } catch (error) {
     console.error('Error fetching user data', error)
   }
@@ -52,8 +53,8 @@ onMounted(async () => {
     const { data } = await axios.post('https://discord.com/api/oauth2/token', requestData, {
       headers,
     })
-    await getMe(data.access_token)
     authStore.authenticate(data)
+    await getMe(data.access_token)
     router.push('/home')
   } catch (error) {
     if (isAxiosError(error)) {

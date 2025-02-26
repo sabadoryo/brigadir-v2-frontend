@@ -9,14 +9,15 @@ const activeItem = ref('home')
 
 const menuItems = ref([
   { label: 'Главная', icon: 'pi pi-fw pi-home', name: 'home' },
-  { label: 'Матчи', icon: 'pi pi-fw pi-list', name: 'matchlist' },
+  { label: 'Матчи', icon: 'pi pi-fw pi-list', name: 'matches' },
   { label: 'Профиль', icon: 'pi pi-fw pi-user', name: 'profile' },
 ])
 
 const updateActiveItem = () => {
   const route = router.currentRoute.value.path
   if (route.includes('/home')) activeItem.value = 'home'
-  else if (route.includes('/matchlist')) activeItem.value = 'matchlist'
+  else if (route.includes('/matches')) activeItem.value = 'matches'
+  else if (route.includes(`/players/${authStore.user.username}`)) activeItem.value = 'profile'
   else activeItem.value = ''
 }
 

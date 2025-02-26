@@ -45,7 +45,7 @@ onMounted(async () => {
       </div>
 
       <div class="flex justify-content-between mt-4">
-        <PrimeButton label="Edit Profile" icon="pi pi-pencil" class="p-button-outlined" />
+        <PrimeButton label="Редактировать профиль" icon="pi pi-pencil" class="p-button-outlined" />
       </div>
     </div>
   </div>

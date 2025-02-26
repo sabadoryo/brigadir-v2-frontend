@@ -88,6 +88,7 @@ watch(
           <FormGroup
             name="playerAmount"
             :disabled="loading"
+            value="10"
             label="Количество игроков"
             placeholder="Количество игроков"
             type="number"

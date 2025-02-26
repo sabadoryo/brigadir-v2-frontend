@@ -35,6 +35,7 @@ const updateVisible = (val: boolean) => {
 
 const schema = yup.object({
   name: yup.string().required().label('Название'),
+  playerAmount: yup.string().required().label('Количество игроков'),
   game: yup.string().required().label('Игра'),
   distributionType: yup.string().required().label('Тип распределения игроков'),
 })

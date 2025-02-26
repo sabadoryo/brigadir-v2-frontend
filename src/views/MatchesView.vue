@@ -77,7 +77,7 @@ onMounted(async () => {
           showClear
           option-label="label"
           option-value="value"
-          class="w-2"
+          class="w-2 text-sm"
         />
         <PrimeSelect
           placeholder="Статус"
@@ -86,7 +86,7 @@ onMounted(async () => {
           showClear
           option-label="label"
           option-value="value"
-          class="w-2"
+          class="w-2 text-sm"
         />
         <PrimeSelect
           placeholder="Тип распределения игроков"
@@ -95,7 +95,7 @@ onMounted(async () => {
           showClear
           option-label="label"
           option-value="value"
-          class="w-2"
+          class="w-2 text-sm"
         />
 
         <PrimeButton label="Найти" @click="fetchMatches" />

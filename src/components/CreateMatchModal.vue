@@ -72,7 +72,7 @@ watch(
 
 <template>
   <PrimeDialog
-    :header="'Creating match'"
+    :header="'Создание матча'"
     :draggable="false"
     modal
     class="create-match-modal"

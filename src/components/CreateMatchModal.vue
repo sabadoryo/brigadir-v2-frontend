@@ -153,6 +153,7 @@ watch(
       </div>
     </Form>
   </PrimeDialog>
+  <PrimeToast />
 </template>
 
 <style>

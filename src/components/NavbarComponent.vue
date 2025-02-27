@@ -68,6 +68,12 @@ const logout = () => {
         @click="changeLanguage('ru')"
         :class="{ selected: locale === 'ru' }"
       />
+      <PrimeButton
+        severity="secondary"
+        label="KZ"
+        @click="changeLanguage('kz')"
+        :class="{ selected: locale === 'kz' }"
+      />
       <PrimeButton class="ml-4" :label="$t('buttons.logout')" icon="pi pi-sign-out" @click="logout" />
     </div>
   </div>

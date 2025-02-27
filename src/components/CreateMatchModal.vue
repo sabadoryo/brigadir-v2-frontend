@@ -41,12 +41,14 @@ const updateVisible = (val: boolean) => {
   }
 }
 
-const schema = yup.object({
-  name: yup.string().required().label(t('placeholders.name')),
-  playerAmount: yup.number().min(2).required().label(t('placeholders.playerAmount')),
-  game: yup.string().required().label(t('placeholders.game')),
-  distributionType: yup.string().required().label(t('placeholders.distributionType')),
-})
+const schema = computed(() =>
+  yup.object({
+    name: yup.string().required().label(t('placeholders.name')),
+    playerAmount: yup.number().min(2).required().label(t('placeholders.playerAmount')),
+    game: yup.string().required().label(t('placeholders.game')),
+    distributionType: yup.string().required().label(t('placeholders.distributionType')),
+  }),
+)
 
 async function onSubmit(values: CreateMatchDto) {
   try {

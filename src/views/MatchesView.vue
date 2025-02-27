@@ -1,16 +1,18 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { matchService } from '@/api/services/matchService'
 import type { Match } from '@/types/match'
 import { MatchStatusesEnum } from '@/constants/match-statuses.enum'
 import CreateMatchModal from '@/components/CreateMatchModal.vue'
 import {
-  distributionTypeOptions,
-  gameOptions,
-  matchStatusOptions,
+  getDistributionTypeOptions,
+  getGameOptions,
+  getMatchStatusOptions,
 } from '@/constants/selectOptions/selectOptions'
 import paginationConstruct from '@/helpers/paginationConstruct'
+import type { GamesEnum } from '@/constants/games.enum'
+import { DistributionTypesEnum } from '@/constants/distribution-types.enum'
 
 const matches = ref<Match[]>([])
 const router = useRouter()
@@ -19,8 +21,9 @@ const loading = ref(false)
 const createMatchModalOpen = ref(false)
 const pagination = ref(paginationConstruct())
 
-import type { GamesEnum } from '@/constants/games.enum'
-import { DistributionTypesEnum } from '@/constants/distribution-types.enum'
+const gameOptions = computed(() => getGameOptions())
+const distributionTypeOptions = computed(() => getDistributionTypeOptions())
+const matchStatusOptions = computed(() => getMatchStatusOptions())
 
 const selectedGame = ref<GamesEnum | undefined>(undefined)
 const selectedDistributionType = ref<DistributionTypesEnum | undefined>(undefined)
@@ -66,12 +69,12 @@ onMounted(async () => {
   <PrimeCard class="shadow-none">
     <template #title>
       <div class="flex align-items-center justify-content-between mb-5">
-        <span class="text-xl font-bold">Список матчей</span>
-        <PrimeButton label="Создать матч" @click="openCreateMatchModal" />
+        <span class="text-xl font-bold">{{ $t('matches.list') }}</span>
+        <PrimeButton :label="$t('buttons.createMatch')" @click="openCreateMatchModal" />
       </div>
       <div class="flex align-items-center gap-5 mb-5">
         <PrimeSelect
-          placeholder="Игра"
+          :placeholder="$t('placeholders.game')"
           :options="gameOptions"
           v-model="selectedGame"
           showClear
@@ -80,7 +83,7 @@ onMounted(async () => {
           class="w-2 text-sm"
         />
         <PrimeSelect
-          placeholder="Статус"
+          :placeholder="$t('placeholders.status')"
           v-model="selectedStatus"
           :options="matchStatusOptions"
           showClear
@@ -89,7 +92,7 @@ onMounted(async () => {
           class="w-2 text-sm"
         />
         <PrimeSelect
-          placeholder="Тип распределения игроков"
+          :placeholder="$t('placeholders.distributionType')"
           v-model="selectedDistributionType"
           :options="distributionTypeOptions"
           showClear
@@ -98,23 +101,26 @@ onMounted(async () => {
           class="w-2 text-sm"
         />
 
-        <PrimeButton label="Найти" @click="fetchMatches" />
+        <PrimeButton :label="$t('buttons.find')" @click="fetchMatches" />
       </div>
     </template>
     <template #content>
       <PrimeDataTable :loading="loading" :value="matches" responsiveLayout="scroll">
-        <PrimeColumn field="game" header="Игра"></PrimeColumn>
-        <PrimeColumn field="hostId.username" header="Хост"></PrimeColumn>
-        <PrimeColumn field="distributionType" header="Тип распределения"></PrimeColumn>
-        <PrimeColumn field="teamA.name" header="Команда A"></PrimeColumn>
-        <PrimeColumn field="teamB.name" header="Команда B"></PrimeColumn>
-        <PrimeColumn field="status" header="Статус"></PrimeColumn>
-        <PrimeColumn field="startTime" header="Время начала"></PrimeColumn>
-        <PrimeColumn field="endTime" header="Время конца"></PrimeColumn>
+        <PrimeColumn field="game" :header="$t('matches.table.game')"></PrimeColumn>
+        <PrimeColumn field="hostId.username" :header="$t('matches.table.host')"></PrimeColumn>
+        <PrimeColumn
+          field="distributionType"
+          :header="$t('matches.table.distributionType')"
+        ></PrimeColumn>
+        <PrimeColumn field="teamA.name" :header="$t('matches.table.teamA')"></PrimeColumn>
+        <PrimeColumn field="teamB.name" :header="$t('matches.table.teamB')"></PrimeColumn>
+        <PrimeColumn field="status" :header="$t('matches.table.status')"></PrimeColumn>
+        <PrimeColumn field="startTime" :header="$t('matches.table.startTime')"></PrimeColumn>
+        <PrimeColumn field="endTime" :header="$t('matches.table.endTime')"></PrimeColumn>
         <PrimeColumn>
           <template #body="{ data }">
             <div class="flex justify-content-end">
-              <PrimeButton label="Перейти" @click="goToMatch(data._id, data.status)" />
+              <PrimeButton :label="$t('buttons.goto')" @click="goToMatch(data._id, data.status)" />
             </div>
           </template>
         </PrimeColumn>

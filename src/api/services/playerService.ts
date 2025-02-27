@@ -1,4 +1,4 @@
-import apiClient from '@/utils/axiosInstance'
+import apiClient from '@/plugins/axiosInstance'
 import { API_ENDPOINTS } from '../endpoints'
 
 export const playerService = {

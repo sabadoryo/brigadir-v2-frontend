@@ -1,4 +1,4 @@
-import apiClient from '@/utils/axiosInstance'
+import apiClient from '@/plugins/axiosInstance'
 import { API_ENDPOINTS } from '../endpoints'
 import type { GamesEnum } from '@/constants/games.enum'
 import type { DistributionTypesEnum } from '@/constants/distribution-types.enum'

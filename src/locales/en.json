@@ -1,0 +1,59 @@
+{
+  "common": {
+    "welcome": "Welcome!"
+  },
+  "menuItems": {
+    "home": "Home",
+    "matches": "Matches",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "matches": {
+    "list": "Matchlist",
+    "table": {
+      "game": "Game",
+      "host": "Host",
+      "distributionType":"Distribution type",
+      "teamA": "Team A",
+      "teamB": "Team B",
+      "status": "Status",
+      "startTime": "Start time",
+      "endTime": "End time"
+    }
+  },
+  "distributionTypes": {
+    "random": "Random",
+    "equal": "By Rating",
+    "manual": "Manually"
+  },
+  "games": {
+    "valorant": "Valorant",
+    "dota2": "Dota 2",
+    "cs2": "CS 2"
+  },
+  "matchStatuses": {
+    "created": "Created",
+    "active": "Active",
+    "canceled": "Canceled",
+    "finished": "Finished"
+  },
+  "profile": {
+    "edit": "Edit profile"
+  },
+  "placeholders": {
+    "name": "name",
+    "playerAmount": "Player amount",
+    "game": "Game",
+    "status": "Status",
+    "distributionType": "Distribution type"
+  },
+  "buttons": {
+    "create": "Create",
+    "createMatch": "Create match",
+    "save": "Save",
+    "cancel": "Cancel",
+    "logout": "Logout",
+    "goto": "Go to",
+    "find": "Find"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "common": {
+    "welcome": "Добро пожаловать!"
+  },
+  "menuItems": {
+    "home": "Главная",
+    "matches": "Матчи",
+    "profile": "Профиль",
+    "logout": "Выйти"
+  },
+  "matches": {
+    "list": "Список матчей",
+    "table": {
+      "game": "Игра",
+      "host": "Хост",
+      "distributionType": "Тип распределения",
+      "teamA": "Команда A",
+      "teamB": "Команда B",
+      "status": "Статус",
+      "startTime": "Время начала",
+      "endTime": "Время конца"
+    }
+  },
+  "distributionTypes": {
+    "random": "Рандом",
+    "equal": "По рейтингу",
+    "manual": "Вручную"
+  },
+  "games": {
+    "valorant": "Валорант",
+    "dota2": "Дота 2",
+    "cs2": "Кс 2"
+  },
+  "matchStatuses": {
+    "created": "Созданные",
+    "active": "Активные",
+    "canceled": "Отмененные",
+    "finished": "Завершенные"
+  },
+  "profile": {
+    "edit": "Редактировать профиль"
+  },
+  "placeholders": {
+    "name": "Название",
+    "playerAmount": "Количество игроков",
+    "game": "Игра",
+    "status": "Статус",
+    "distributionType": "Тип распределения"
+  },
+  "buttons": {
+    "create": "Создать",
+    "createMatch": "Создать матч",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "logout": "Выйти",
+    "goto": "Перейти",
+    "find": "Найти"
+  }
+}

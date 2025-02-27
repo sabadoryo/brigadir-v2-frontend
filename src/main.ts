@@ -33,6 +33,7 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import ColumnGroup from 'primevue/columngroup'
 import Row from 'primevue/row'
+import { i18n } from './locales'
 
 const app = createApp(App)
 
@@ -66,6 +67,7 @@ app.component('PrimeCard', Card)
 app.component('PrimePaginator', Paginator)
 
 app.use(ToastService)
+app.use(i18n)
 app.use(createPinia())
 app.use(router)
 

@@ -1,22 +1,25 @@
-import { DistributionTypesEnum } from "../distribution-types.enum"
-import { GamesEnum } from "../games.enum"
-import { MatchStatusesEnum } from "../match-statuses.enum"
+import { i18n } from '@/locales'
+import { DistributionTypesEnum } from '../distribution-types.enum'
+import { GamesEnum } from '../games.enum'
+import { MatchStatusesEnum } from '../match-statuses.enum'
 
-export const distributionTypeOptions = [
-  { label: 'Рандом', value: DistributionTypesEnum.RANDOM },
-  { label: 'По рейтингу', value: DistributionTypesEnum.EQUAL },
-  { label: 'Вручную', value: DistributionTypesEnum.MANUAL },
+const { t } = i18n.global
+
+export const getDistributionTypeOptions = () => [
+  { label: t('distributionTypes.random'), value: DistributionTypesEnum.RANDOM },
+  { label: t('distributionTypes.equal'), value: DistributionTypesEnum.EQUAL },
+  { label: t('distributionTypes.manual'), value: DistributionTypesEnum.MANUAL },
 ]
 
-export const gameOptions = [
-  { label: 'Валорант', value: GamesEnum.VALORANT },
-  { label: 'Дота 2', value: GamesEnum.DOTA2 },
-  { label: 'Кс 2', value: GamesEnum.CS2 },
+export const getGameOptions = () => [
+  { label: t('games.valorant'), value: GamesEnum.VALORANT },
+  { label: t('games.dota2'), value: GamesEnum.DOTA2 },
+  { label: t('games.cs2'), value: GamesEnum.CS2 },
 ]
 
-export const matchStatusOptions = [
-  { label: 'Созданные', value: MatchStatusesEnum.CREATED },
-  { label: 'Активные', value: MatchStatusesEnum.ACTIVE },
-  { label: 'Отмененные', value: MatchStatusesEnum.CANCELED },
-  { label: 'Завершенные', value: MatchStatusesEnum.FINISHED },
+export const getMatchStatusOptions = () => [
+  { label: t('matchStatuses.created'), value: MatchStatusesEnum.CREATED },
+  { label: t('matchStatuses.active'), value: MatchStatusesEnum.ACTIVE },
+  { label: t('matchStatuses.canceled'), value: MatchStatusesEnum.CANCELED },
+  { label: t('matchStatuses.finished'), value: MatchStatusesEnum.FINISHED },
 ]

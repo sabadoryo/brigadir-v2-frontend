@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { Form, type SubmissionHandler } from 'vee-validate'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import * as yup from 'yup'
 import FormGroup from './FormGroup.vue'
 import { matchService, type CreateMatchDto } from '@/api/services/matchService'
 import { useAuth } from '@/stores/authStore'
-import { distributionTypeOptions, gameOptions } from '@/constants/selectOptions/selectOptions'
+import { getDistributionTypeOptions, getGameOptions } from '@/constants/selectOptions/selectOptions'
+import { i18n } from '@/locales'
 
 const emit = defineEmits(['close', 'save'])
 const props = defineProps({
@@ -15,9 +16,13 @@ const props = defineProps({
   },
 })
 
+const { t } = i18n.global
 const authStore = useAuth()
 const isOpen = ref(false)
 const loading = ref(false)
+
+const gameOptions = computed(() => getGameOptions())
+const distributionTypeOptions = computed(() => getDistributionTypeOptions())
 
 async function opened() {
   isOpen.value = true
@@ -34,10 +39,10 @@ const updateVisible = (val: boolean) => {
 }
 
 const schema = yup.object({
-  name: yup.string().required().label('Название'),
-  playerAmount: yup.number().required().label('Количество игроков'),
-  game: yup.string().required().label('Игра'),
-  distributionType: yup.string().required().label('Тип распределения игроков'),
+  name: yup.string().required().label(t('placeholders.name')),
+  playerAmount: yup.number().required().label(t('placeholders.playerAmount')),
+  game: yup.string().required().label(t('placeholders.game')),
+  distributionType: yup.string().required().label(t('placeholders.distributionType')),
 })
 
 async function onSubmit(values: CreateMatchDto) {
@@ -82,15 +87,20 @@ watch(
     <Form :validation-schema="schema" @submit="onSubmit as SubmissionHandler<CreateMatchDto>">
       <div class="formgrid grid">
         <div class="field col-12 md:col-6">
-          <FormGroup name="name" :disabled="loading" label="Название" placeholder="Название" />
+          <FormGroup
+            name="name"
+            :disabled="loading"
+            :label="$t('placeholders.name')"
+            :placeholder="$t('placeholders.name')"
+          />
         </div>
         <div class="field col-12 md:col-6">
           <FormGroup
             name="playerAmount"
             :disabled="loading"
             value="10"
-            label="Количество игроков"
-            placeholder="Количество игроков"
+            :label="$t('placeholders.playerAmount')"
+            :placeholder="$t('placeholders.playerAmount')"
             type="number"
           />
         </div>
@@ -98,8 +108,8 @@ watch(
           <FormGroup
             name="game"
             :disabled="loading"
-            label="Игра"
-            placeholder="Игра"
+            :label="$t('placeholders.game')"
+            :placeholder="$t('placeholders.game')"
             :list="gameOptions"
             type="select"
           />
@@ -108,8 +118,8 @@ watch(
           <FormGroup
             name="distributionType"
             :disabled="loading"
-            label="Тип распределения игроков"
-            placeholder="Тип распределения игроков"
+            :label="$t('placeholders.distributionType')"
+            :placeholder="$t('placeholders.distributionType')"
             :list="distributionTypeOptions"
             type="select"
           />
@@ -119,11 +129,11 @@ watch(
           <PrimeButton
             severity="secondary"
             outlined
-            :label="'Отмена'"
+            :label="$t('buttons.cancel')"
             @click="$emit('close')"
             :disabled="loading"
           />
-          <PrimeButton severity="primary" :label="'Создать'" :disabled="loading" type="submit" />
+          <PrimeButton severity="primary" :label="$t('buttons.create')" :disabled="loading" type="submit" />
         </div>
       </div>
     </Form>

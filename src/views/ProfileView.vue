@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import apiClient from '@/utils/axiosInstance'
+import apiClient from '@/plugins/axiosInstance'
 import { useRoute } from 'vue-router'
 import type { Player } from '@/types/player'
 
@@ -45,7 +45,7 @@ onMounted(async () => {
       </div>
 
       <div class="flex justify-content-between mt-4">
-        <PrimeButton label="Редактировать профиль" icon="pi pi-pencil" class="p-button-outlined" />
+        <PrimeButton :label="$t('profile.edit')" icon="pi pi-pencil" class="p-button-outlined" />
       </div>
     </div>
   </div>

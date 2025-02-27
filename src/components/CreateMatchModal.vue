@@ -7,6 +7,8 @@ import { matchService, type CreateMatchDto } from '@/api/services/matchService'
 import { useAuth } from '@/stores/authStore'
 import { getDistributionTypeOptions, getGameOptions } from '@/constants/selectOptions/selectOptions'
 import { i18n } from '@/locales'
+import { useToast } from 'primevue'
+import { isAxiosError } from 'axios'
 
 const emit = defineEmits(['close', 'save'])
 const props = defineProps({
@@ -20,6 +22,7 @@ const { t } = i18n.global
 const authStore = useAuth()
 const isOpen = ref(false)
 const loading = ref(false)
+const toast = useToast()
 
 const gameOptions = computed(() => getGameOptions())
 const distributionTypeOptions = computed(() => getDistributionTypeOptions())
@@ -40,7 +43,7 @@ const updateVisible = (val: boolean) => {
 
 const schema = yup.object({
   name: yup.string().required().label(t('placeholders.name')),
-  playerAmount: yup.number().required().label(t('placeholders.playerAmount')),
+  playerAmount: yup.number().min(2).required().label(t('placeholders.playerAmount')),
   game: yup.string().required().label(t('placeholders.game')),
   distributionType: yup.string().required().label(t('placeholders.distributionType')),
 })
@@ -58,7 +61,14 @@ async function onSubmit(values: CreateMatchDto) {
     emit('close')
     emit('save')
   } catch (error) {
-    console.log(error)
+    if (isAxiosError(error)) {
+      toast.add({
+        severity: 'error',
+        summary: 'Ошибка',
+        detail: error?.response?.data.message || 'error',
+        life: 3000,
+      })
+    }
   } finally {
     loading.value = false
   }
@@ -133,7 +143,12 @@ watch(
             @click="$emit('close')"
             :disabled="loading"
           />
-          <PrimeButton severity="primary" :label="$t('buttons.create')" :disabled="loading" type="submit" />
+          <PrimeButton
+            severity="primary"
+            :label="$t('buttons.create')"
+            :disabled="loading"
+            type="submit"
+          />
         </div>
       </div>
     </Form>

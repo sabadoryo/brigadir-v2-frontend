@@ -4,12 +4,12 @@ export const useAuth = defineStore('auth', {
   state: () => ({
     token: localStorage.getItem('token') || null,
     user: (() => {
-      const user = localStorage.getItem('user');
+      const user = localStorage.getItem('user')
       try {
-        return user ? JSON.parse(user) : null;
+        return user ? JSON.parse(user) : null
       } catch (error) {
-        console.error('Ошибка парсинга user из localStorage:', error);
-        return null;
+        console.error('Ошибка парсинга user из localStorage:', error)
+        return null
       }
     })(),
   }),
@@ -20,6 +20,7 @@ export const useAuth = defineStore('auth', {
     },
     logout() {
       localStorage.removeItem('token')
+      localStorage.removeItem('user')
       this.token = null
     },
     setUser(user: object) {

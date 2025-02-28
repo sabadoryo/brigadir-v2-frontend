@@ -4,6 +4,7 @@ import { defineProps, computed, ref } from 'vue'
 import { useToast } from 'primevue/usetoast'
 import { matchService } from '@/api/services/matchService'
 import { useRoute } from 'vue-router'
+import { isAxiosError } from 'axios'
 
 const authStore = useAuth()
 
@@ -45,6 +46,14 @@ const joinTeam = async () => {
     })
   } catch (error) {
     toast.add({ severity: 'error', summary: `${error}`, detail: 'Не удалось выйти', life: 3000 })
+    if (isAxiosError(error)) {
+      toast.add({
+        severity: 'error',
+        summary: 'Ошибка',
+        detail: error?.response?.data.message || 'error',
+        life: 3000,
+      })
+    }
   } finally {
     loading.value = false
   }
@@ -56,7 +65,14 @@ const leaveTeam = async () => {
     await matchService.leaveTeam(matchId)
     toast.add({ severity: 'info', summary: 'Вы вышли', detail: 'Вы покинули команду', life: 3000 })
   } catch (error) {
-    toast.add({ severity: 'error', summary: `${error}`, detail: 'Не удалось выйти', life: 3000 })
+    if (isAxiosError(error)) {
+      toast.add({
+        severity: 'error',
+        summary: 'Ошибка',
+        detail: error?.response?.data.message || 'error',
+        life: 3000,
+      })
+    }
   } finally {
     loading.value = false
   }

@@ -11,14 +11,9 @@ const authStore = useAuth()
 const toast = useToast()
 const code = new URLSearchParams(window.location.search).get('code')
 
-async function getMe(token: string) {
+async function getMe() {
   try {
-    const { data } = await axios.get('https://discord.com/api/users/@me', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    const { data: playerData } = await playerService.getPlayerByUsername(data.username)
+    const { data: playerData } = await playerService.getMe()
     authStore.setUser(playerData)
   } catch (error) {
     console.error('Error fetching user data', error)
@@ -54,7 +49,7 @@ onMounted(async () => {
       headers,
     })
     authStore.authenticate(data)
-    await getMe(data.access_token)
+    await getMe()
     router.push('/home')
   } catch (error) {
     if (isAxiosError(error)) {

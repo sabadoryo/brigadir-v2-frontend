@@ -5,4 +5,8 @@ export const playerService = {
   async getPlayerByUsername(username: string) {
     return apiClient.get(API_ENDPOINTS.players.playerByUsername(username))
   },
+
+  async getMe() {
+    return apiClient.get(API_ENDPOINTS.players.getMe())
+  },
 }

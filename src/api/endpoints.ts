@@ -8,6 +8,7 @@ export const API_ENDPOINTS = {
     end: (matchId: string) => `/matches/${matchId}/end`,
   },
   players: {
+    getMe: () => `/players/getMe`,
     playerByUsername: (username: string) => `/players/${username}`,
   },
 }

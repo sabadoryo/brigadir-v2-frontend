@@ -1,31 +1,14 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import apiClient from '@/plugins/axiosInstance'
-import { useRoute } from 'vue-router'
-import type { Player } from '@/types/player'
+import { onMounted } from 'vue'
+import { useAuth } from '@/stores/authStore'
 
-const user = ref<Player>()
-const route = useRoute()
-const loading = ref(false)
+const authStore = useAuth()
 
-async function getUser() {
-  try {
-    loading.value = true
-    const { data } = await apiClient.get(`/players/${route.params.username}`)
-    user.value = data
-    if (user.value) {
-      user.value.avatar = `https://cdn.discordapp.com/avatars/${user.value.discordId}/${user.value?.avatar}.png`
-    }
-  } catch (error) {
-    console.error('Error fetching user', error)
-  } finally {
-    loading.value = false
-  }
+const getAvatar = () => {
+  return `https://cdn.discordapp.com/avatars/${authStore.user.discordId}/${authStore.user?.avatar}.png`
 }
 
-onMounted(async () => {
-  await getUser()
-})
+onMounted(async () => {})
 </script>
 
 <template>
@@ -33,15 +16,17 @@ onMounted(async () => {
     <div class="surface-card p-4 shadow-2 border-round w-full sm:w-30rem">
       <div class="flex flex-column align-items-center">
         <PrimeAvatar
-          :image="user.avatar"
+          :image="getAvatar()"
           shape="circle"
           size="xlarge"
           class="mb-3"
-          v-if="user?.avatar"
+          v-if="getAvatar()"
         />
         <PrimeSkeleton shape="circle" size="4rem" class="mb-4" v-else />
-        <h2 class="text-xl font-bold" v-if="user?.username">{{ user?.username }}</h2>
-        <PrimeSkeleton width="10rem" height="1.5rem" v-else/>
+        <h2 class="text-xl font-bold" v-if="authStore?.user?.username">
+          {{ authStore?.user?.username }}
+        </h2>
+        <PrimeSkeleton width="10rem" height="1.5rem" v-else />
       </div>
 
       <div class="flex justify-content-between mt-4">

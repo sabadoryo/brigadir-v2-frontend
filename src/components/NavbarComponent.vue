@@ -21,7 +21,7 @@ const updateActiveItem = () => {
   const route = router.currentRoute.value.path
   if (route.includes('/home')) activeItem.value = 'home'
   else if (route.includes('/matches')) activeItem.value = 'matches'
-  else if (route.includes(`/players/${authStore.user.username}`)) activeItem.value = 'profile'
+  else if (route.includes(`/players/${authStore.user?.username}`)) activeItem.value = 'profile'
   else activeItem.value = ''
 }
 
